@@ -11,6 +11,9 @@ const signer = new ethers.Wallet(PRIVATE_KEY)
 const connected_account = signer.connect(provider)
 const WALLET_ADDRESS = signer.address;
 
+const token1Address = ''
+const token2Address = ''
+
 console.log(connected_account)
 
 const main = async () => {
@@ -30,7 +33,24 @@ const main = async () => {
     )
 
     //Creating the Pool
-    const tx = 
+    const tx = await factoryContract.createPool(
+        token1Address,
+        token2Address,
+        500                             //fee in basis points
+    )
+
+    const receipt = tx.wait()
+
+    console.log("receipt",receipt)
+
+    //Get the address of the new pool
+    const newPoolAddress = await factoryContract.getPool(
+        token1Address,
+        token2Address,
+        500
+    )
+
+    console.log("Pool",newPoolAddress)
 
 }
 
